@@ -1,0 +1,2 @@
+# gradle-monorepo
+Gradle Monorepo

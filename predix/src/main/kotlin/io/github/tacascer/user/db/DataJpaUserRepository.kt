@@ -14,6 +14,5 @@ class DataJpaUserRepository(
         return userEntityMapper.toDomain(savedUserEntity)
     }
 
-    override fun findById(id: Long): User? =
-        userEntityRepository.findById(id).map { userEntityMapper.toDomain(it) }.orElse(null)
+    override fun findById(id: Long): User? = userEntityRepository.findById(id).map { userEntityMapper.toDomain(it) }.orElse(null)
 }

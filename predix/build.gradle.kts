@@ -78,3 +78,9 @@ spotless {
         ktlint()
     }
 }
+sonar {
+    properties {
+        property("sonar.projectKey", "tacascer-org_predix")
+        property("sonar.organization", "tacascer-org")
+    }
+}

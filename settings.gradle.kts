@@ -10,4 +10,14 @@ develocity {
     }
 }
 
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
 rootProject.name = "gradle-monorepo"
+
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+
+include("predix")

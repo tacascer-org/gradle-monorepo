@@ -9,7 +9,5 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class UserConfiguration {
     @Bean
-    fun userService(userRepository: UserRepository): UserService {
-        return DomainUserService(userRepository)
-    }
+    fun userService(userRepository: UserRepository): UserService = DomainUserService(userRepository)
 }

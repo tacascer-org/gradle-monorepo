@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.adarshr.testLogger)
+    alias(libs.plugins.diffplug.spotless)
     alias(libs.plugins.kotlin.allopen)
     alias(libs.plugins.kotlin.jpa)
     alias(libs.plugins.kotlin.jvm)
@@ -70,4 +71,10 @@ kotlin {
         freeCompilerArgs.add("-Xjsr305=strict")
     }
     jvmToolchain(21)
+}
+
+spotless {
+    kotlin {
+        ktlint()
+    }
 }

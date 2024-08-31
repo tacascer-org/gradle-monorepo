@@ -13,6 +13,7 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.8.0" }
 sonarqube = { id = "org.sonarqube", version = "5.0.0.4638" }
+diffplug-spotless = { id = "com.diffplug.spotless", version = "7.0.0.BETA2" }
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
 
 [libraries]

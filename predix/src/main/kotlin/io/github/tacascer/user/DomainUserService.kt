@@ -8,9 +8,7 @@ import jakarta.transaction.Transactional
 class DomainUserService(
     private val userRepository: UserRepository,
 ) : UserService {
-    override fun create(user: User): User {
-        return userRepository.save(user)
-    }
+    override fun create(user: User): User = userRepository.save(user)
 
     override fun findById(id: Long): User? = userRepository.findById(id)
 

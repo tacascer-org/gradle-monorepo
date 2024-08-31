@@ -17,3 +17,7 @@ sonar {
 dependencies {
     kover(project(":predix"))
 }
+
+tasks.sonar {
+    dependsOn(tasks.koverXmlReport)
+}

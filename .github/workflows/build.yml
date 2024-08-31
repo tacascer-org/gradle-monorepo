@@ -10,6 +10,8 @@ permissions: { }
 jobs:
   build-project:
     runs-on: "ubuntu-latest"
+    env:
+      GRADLE_ENCRYPTION_KEY: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:

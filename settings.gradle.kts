@@ -19,5 +19,6 @@ dependencyResolutionManagement {
 rootProject.name = "gradle-monorepo"
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include("predix")

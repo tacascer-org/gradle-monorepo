@@ -15,7 +15,7 @@ sonar {
 }
 
 dependencies {
-    kover(project(":predix"))
+    kover(projects.predix)
 }
 
 tasks.sonar {

@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.kotlinx.kover)
-    alias(libs.plugins.sonarqube)
     alias(libs.plugins.spring.boot)
     `jvm-test-suite`
 }
@@ -78,6 +77,7 @@ spotless {
         ktlint()
     }
 }
+
 sonar {
     properties {
         property("sonar.projectKey", "tacascer-org_gradle-monorepo_predix")

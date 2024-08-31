@@ -80,7 +80,7 @@ spotless {
 }
 sonar {
     properties {
-        property("sonar.projectKey", "tacascer-org_predix")
+        property("sonar.projectKey", "tacascer-org_gradle-monorepo_predix")
         property("sonar.organization", "tacascer-org")
     }
 }

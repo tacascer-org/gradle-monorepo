@@ -109,6 +109,12 @@ jobs:
           FILTER_REGEX_EXCLUDE: .*CHANGELOG.md|.*gradlew.* # Ignore generated files
           VALIDATE_JSCPD: false # Disable JSCPD validation
       - name: Commit and push linting fixes
+        # Run only on:
+        # - Pull requests
+        # - Not on the default branch
+        if: >
+          github.event_name == 'pull_request' &&
+          github.ref_name != github.event.repository.default_branch
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: fix linting issues"

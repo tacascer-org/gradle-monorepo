@@ -2,7 +2,7 @@
 mapstruct = "1.5.5.Final"
 kotest = "5.9.0"
 kotlin = "2.0.20"
-springBoot = "3.3.0"
+springBoot = "3.3.3"
 
 [plugins]
 adarshr-testLogger = { id = "com.adarshr.test-logger", version = "4.0.0" }

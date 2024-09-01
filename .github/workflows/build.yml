@@ -115,9 +115,14 @@ jobs:
         with:
           fetch-depth: 0
       - name: Super-Linter
-        uses: super-linter/super-linter@v7.1.0 # x-release-please-version
+        uses: super-linter/super-linter@v7.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.SUPER_LINTER_TOKEN }}
+          # Set your fix mode variables to true
+          FIX_JSON_PRETTIER: true
+          FIX_MARKDOWN_PRETTIER: true
+          FIX_SHELL_SHFMT: true
+          FIX_YAML_PRETTIER: true
       - name: Commit and push linting fixes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

@@ -82,11 +82,6 @@ jobs:
       contents: write
 
   lint:
-    permissions:
-      # To write linting fixes
-      contents: write
-      # To write Super-linter status checks
-      statuses: write
     runs-on: ubuntu-latest
     steps:
       - id: create_token

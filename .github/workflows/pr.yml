@@ -1,8 +1,8 @@
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [ opened, synchronize, reopened ]
 
-permissions: {}
+permissions: { }
 
 jobs:
   build-project:
@@ -70,3 +70,12 @@ jobs:
           commit_author: "${{ steps.import-gpg.outputs.name }} <${{ steps.import-gpg.outputs.email }}>"
           commit_user_name: ${{ steps.import-gpg.outputs.name }}
           commit_user_email: ${{ steps.import-gpg.outputs.email }}
+
+  format_version_catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Format version catalog
+        run: ./gradlew versionCatalogFormat
+    permissions:
+      contents: write

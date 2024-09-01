@@ -116,7 +116,7 @@ jobs:
       - name: Super-Linter
         uses: super-linter/super-linter@v7.1.0 # x-release-please-version
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SUPER_LINTER_TOKEN }}
       - name: Commit and push linting fixes
         # Run only on:
         # - Pull requests

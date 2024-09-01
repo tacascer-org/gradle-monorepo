@@ -120,14 +120,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Set your fix mode variables to true
-          FIX_JSON_PRETTIER: true
-          FIX_MARKDOWN_PRETTIER: true
-          FIX_SHELL_SHFMT: true
+          FIX_JSON: true
+          FIX_MARKDOWN: true
+          FIX_SHELL: true
           FIX_YAML_PRETTIER: true
+          FILTER_REGEX_EXCLUDE: .*CHANGELOG.md|.*gradlew.* # Ignore generated files
+          VALIDATE_JSCPD: false # Disable JSCPD validation
       - name: Commit and push linting fixes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: fix linting issues"
           commit_user_name: super-linter
           commit_user_email: super-linter@super-linter.dev
-

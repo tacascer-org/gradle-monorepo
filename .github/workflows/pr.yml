@@ -1,8 +1,8 @@
 on:
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
 
-permissions: { }
+permissions: {}
 
 jobs:
   build-project:
@@ -43,8 +43,8 @@ jobs:
       - id: create_token
         uses: tibdex/github-app-token@v2
         with:
-            app_id: ${{ secrets.TACASCER_BOT_APP_ID }}
-            private_key: ${{ secrets.TACASCER_BOT_PRIVATE_KEY }}
+          app_id: ${{ secrets.TACASCER_BOT_APP_ID }}
+          private_key: ${{ secrets.TACASCER_BOT_PRIVATE_KEY }}
       - uses: actions/checkout@v4
         with:
           # super-linter needs the full git history to get the

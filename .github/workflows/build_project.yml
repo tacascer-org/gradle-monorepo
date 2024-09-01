@@ -4,7 +4,7 @@ on:
       SONAR_TOKEN:
         required: true
 
-permissions: { }
+permissions: {}
 
 jobs:
   build-project:

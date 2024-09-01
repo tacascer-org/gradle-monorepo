@@ -181,3 +181,6 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,gradle,java,kotlin
+
+/github_conf/
+/super-linter-output/

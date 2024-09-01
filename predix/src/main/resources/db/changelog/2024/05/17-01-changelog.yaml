@@ -56,4 +56,3 @@ databaseChangeLog:
             constraintName: fk_users_predictions_on_user_entity
             referencedColumnNames: id
             referencedTableName: users
-

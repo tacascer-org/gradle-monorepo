@@ -3,9 +3,9 @@ on:
     branches:
       - main
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
 
-permissions: { }
+permissions: {}
 
 jobs:
   build-project:
@@ -30,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-sonar
       - name: Run Sonar analysis
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           ./gradlew sonar
@@ -85,25 +85,6 @@ jobs:
       contents: write
 
   lint:
-    runs-on: ubuntu-latest
-    permissions:
-      # To report GitHub Actions status checks
-      statuses: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          # super-linter needs the full git history to get the
-          # list of files that changed across commits
-          fetch-depth: 0
-      - name: Super-linter
-        uses: super-linter/super-linter@v7.1.0
-        env:
-          # To report GitHub Actions status checks
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_EXCLUDE: .*CHANGELOG.md|.*gradlew.* # Ignore generated files
-          VALIDATE_JSCPD: false # Disable JSCPD validation
-
-  fix-lint-issues:
     permissions:
       # To write linting fixes
       contents: write
@@ -113,20 +94,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
           fetch-depth: 0
+          token: ${{ secrets.SUPER_LINTER_TOKEN }}
       - name: Super-Linter
         uses: super-linter/super-linter@v7.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.SUPER_LINTER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Set your fix mode variables to true
           FIX_JSON_PRETTIER: true
           FIX_MARKDOWN_PRETTIER: true
-          FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
+          FILTER_REGEX_EXCLUDE: .*CHANGELOG.md|.*gradlew.* # Ignore generated files
+          VALIDATE_JSCPD: false # Disable JSCPD validation
       - name: Commit and push linting fixes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          branch: ${{ github.event.pull_request.head.ref || github.head_ref || github.ref }}
           commit_message: "chore: fix linting issues"
           commit_user_name: super-linter
           commit_user_email: super-linter@super-linter.dev

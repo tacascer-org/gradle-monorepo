@@ -9,8 +9,7 @@ jobs:
     uses: ./.github/workflows/build_project.yml
     with:
       java-version: ${{ vars.JAVA_VERSION }}
-    secrets:
-      inherit: true
+    secrets: inherit
     permissions:
       security-events: write
 

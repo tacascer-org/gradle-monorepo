@@ -1,8 +1,8 @@
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [ opened, synchronize, reopened ]
 
-permissions: {}
+permissions: { }
 
 jobs:
   build-project:
@@ -109,3 +109,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: fix linting issues"
+          commit_user_name: "tacascer-bot[bot]"
+          commit_user_email: "180103676+tacascer-bot[bot]@users.noreply.github.com"
+          commit_author: "tacascer-bot[bot] <180103676+tacascer-bot[bot]@users.noreply.github.com>"

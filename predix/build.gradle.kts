@@ -93,3 +93,7 @@ sonar {
 tasks.sonar {
     dependsOn(tasks.koverXmlReport)
 }
+
+val qualityCheck by tasks.registering {
+    dependsOn(tasks.sonar)
+}

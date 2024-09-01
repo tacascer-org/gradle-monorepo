@@ -24,3 +24,5 @@ val checkAll by tasks.registering {
 val qualityCheckAll by tasks.registering {
     dependsOn(tasks.sonar)
 }
+
+val lintAll by tasks.registering {}

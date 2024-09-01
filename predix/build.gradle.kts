@@ -94,6 +94,10 @@ tasks.sonar {
     dependsOn(tasks.koverXmlReport)
 }
 
+val lint by tasks.registering {
+    dependsOn(tasks.spotlessApply)
+}
+
 val qualityCheck by tasks.registering {
     dependsOn(tasks.sonar)
 }

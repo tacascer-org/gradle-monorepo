@@ -17,6 +17,12 @@ spotless {
     }
 }
 
+sonar {
+    properties {
+        property("sonar.organization", "tacascer-org")
+    }
+}
+
 tasks.sonar {
     dependsOn(tasks.koverXmlReport)
 }

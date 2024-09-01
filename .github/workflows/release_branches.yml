@@ -1,9 +1,11 @@
 on:
   push:
     branches:
+      - main
       - release/*
 
 permissions: {}
+
 jobs:
   release-please:
     runs-on: ubuntu-latest

@@ -16,3 +16,7 @@ sonar {
         property("sonar.organization", "tacascer-org")
     }
 }
+
+val qualityCheckAll by tasks.registering {
+    dependsOn(tasks.sonar)
+}

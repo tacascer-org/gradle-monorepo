@@ -4,14 +4,9 @@ on:
 
 permissions: { }
 
-env:
-  JAVA_VERSION: 21
-
 jobs:
   build-project:
     uses: ./.github/workflows/build_project.yml
-    with:
-      java-version: ${{ env.JAVA_VERSION }}
     secrets:
       inherit: true
     permissions:
@@ -31,7 +26,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ env.JAVA_VERSION }}
+          java-version: ${{ vars.JAVA_VERSION }}
       - name: Perform dependency review
         uses: actions/dependency-review-action@v4
         continue-on-error: true

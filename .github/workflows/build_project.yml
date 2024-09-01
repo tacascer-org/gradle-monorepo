@@ -1,10 +1,5 @@
 on:
   workflow_call:
-    inputs:
-      java-version:
-        description: 'Java version to use'
-        required: true
-        type: number
     secrets:
       SONAR_TOKEN:
         required: true
@@ -19,7 +14,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ inputs.java-version }}
+          java-version: ${{ vars.JAVA_VERSION }}
       - uses: gradle/actions/setup-gradle@v4
       - name: Run tests
         run: ./gradlew check
@@ -42,7 +37,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ inputs.java-version }}
+          java-version: ${{ vars.JAVA_VERSION }}
       - uses: gradle/actions/setup-gradle@v4
       - name: Setup CodeQL analysis
         uses: github/codeql-action/init@v3

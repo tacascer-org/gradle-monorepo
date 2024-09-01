@@ -4,14 +4,11 @@ on:
       - main
 permissions: { }
 
-env:
-  JAVA_VERSION: 21
-
 jobs:
   build-project:
     uses: ./.github/workflows/build_project.yml
     with:
-      java-version: ${{ env.JAVA_VERSION }}
+      java-version: ${{ vars.JAVA_VERSION }}
     secrets:
       inherit: true
     permissions:
@@ -24,7 +21,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ env.JAVA_VERSION }}
+          java-version: ${{ vars.JAVA_VERSION }}
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4
         with:

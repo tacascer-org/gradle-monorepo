@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.diffplug.spotless)
 }
 
+group = "io.github.tacascer"
+
 dependencies {
     kover(projects.predix)
 }

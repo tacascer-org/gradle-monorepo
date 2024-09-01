@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.spring.boot)
+    alias(libs.plugins.sonarqube)
     `jvm-test-suite`
 }
 
@@ -87,4 +88,8 @@ sonar {
             "${layout.buildDirectory.asFile.get()}/reports/kover/report.xml",
         )
     }
+}
+
+tasks.sonar {
+    dependsOn(tasks.koverXmlReport)
 }

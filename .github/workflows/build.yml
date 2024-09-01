@@ -83,27 +83,8 @@ jobs:
           retry-on-snapshot-warnings: true
     permissions:
       contents: write
-#
-#  lint:
-#    runs-on: ubuntu-latest
-#    permissions:
-#      # To report GitHub Actions status checks
-#      statuses: write
-#    steps:
-#      - uses: actions/checkout@v4
-#        with:
-#          # super-linter needs the full git history to get the
-#          # list of files that changed across commits
-#          fetch-depth: 0
-#      - name: Super-linter
-#        uses: super-linter/super-linter@v7.1.0
-#        env:
-#          # To report GitHub Actions status checks
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          FILTER_REGEX_EXCLUDE: .*CHANGELOG.md|.*gradlew.* # Ignore generated files
-#          VALIDATE_JSCPD: false # Disable JSCPD validation
 
-  fix-lint-issues:
+  lint:
     permissions:
       # To write linting fixes
       contents: write
@@ -121,9 +102,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Set your fix mode variables to true
-          FIX_JSON: true
-          FIX_MARKDOWN: true
-          FIX_SHELL: true
+          FIX_JSON_PRETTIER: true
+          FIX_MARKDOWN_PRETTIER: true
           FIX_YAML_PRETTIER: true
           FILTER_REGEX_EXCLUDE: .*CHANGELOG.md|.*gradlew.* # Ignore generated files
           VALIDATE_JSCPD: false # Disable JSCPD validation

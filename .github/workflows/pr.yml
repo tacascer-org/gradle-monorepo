@@ -1,8 +1,8 @@
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [ opened, synchronize, reopened ]
 
-permissions: {}
+permissions: { }
 
 jobs:
   build-project:
@@ -40,17 +40,12 @@ jobs:
       contents: write
       checks: write
     steps:
-      - id: create_token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.TACASCER_BOT_APP_ID }}
-          private_key: ${{ secrets.TACASCER_BOT_PRIVATE_KEY }}
       - uses: actions/checkout@v4
         with:
           # super-linter needs the full git history to get the
           # list of files that changed across commits
           fetch-depth: 0
-          token: ${{ steps.create_token.outputs.token }}
+          token: ${{ secrets.SUPER_LINTER_TOKEN }}
       - name: Super-Linter
         uses: super-linter/super-linter@v7.1.0
         env:
@@ -65,8 +60,7 @@ jobs:
         id: import-gpg
         uses: crazy-max/ghaction-import-gpg@v6
         with:
-          gpg_private_key: ${{ secrets.TACASCER_BOT_GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.TACASCER_BOT_GPG_PASSPHRASE }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           git_user_signingkey: true
           git_commit_gpgsign: true
       - name: Commit and push linting fixes

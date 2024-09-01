@@ -4,7 +4,7 @@ on:
       - main
   pull_request:
 
-permissions: { }
+permissions: {}
 
 jobs:
   run-codeql:

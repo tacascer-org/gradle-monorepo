@@ -35,6 +35,6 @@ spring-boot-starterDataJpa = { module = "org.springframework.boot:spring-boot-st
 spring-boot-starterTest = { module = "org.springframework.boot:spring-boot-starter-test" }
 spring-boot-starterWeb = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
-springdoc-openApiStarterWebMvcUi = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version = "2.5.0" }
+springdoc-openApiStarterWebMvcUi = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version = "2.6.0" }
 testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter" }
 testcontainers-postgresql = { module = "org.testcontainers:postgresql" }

@@ -8,7 +8,7 @@ springBoot = "3.3.3"
 adarshr-testLogger = "com.adarshr.test-logger:4.0.0"
 benManes-versions = "com.github.ben-manes.versions:0.51.0"
 diffplug-spotless = "com.diffplug.spotless:7.0.0.BETA2"
-gradle-pluginPublish = "com.gradle.plugin-publish:1.2.1"
+gradle-pluginPublish = "com.gradle.plugin-publish:1.2.2"
 gradleup-shadow = "com.gradleup.shadow:8.3.0"
 kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
 kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }

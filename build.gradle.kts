@@ -13,7 +13,7 @@ spotless {
     }
 }
 
-tasks.lintAll {
+tasks.lint {
     dependsOn(tasks.spotlessApply)
     dependsOn(tasks.versionCatalogFormat)
 }

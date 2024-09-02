@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.sonarqube)
 }
 
@@ -9,6 +9,11 @@ description =
     """
     Suite of tools to parse conventional commits and generate changelogs.
     """.trimIndent()
+
+kotlin {
+    jvm()
+    linuxX64()
+}
 
 sonar {
     properties {

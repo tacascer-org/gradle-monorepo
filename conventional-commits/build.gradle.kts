@@ -17,6 +17,6 @@ sonar {
     }
 }
 
-tasks.qualityCheckAll {
+tasks.qualityCheck {
     dependsOn(tasks.sonar)
 }

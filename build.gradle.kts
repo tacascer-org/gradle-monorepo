@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.benManes.versions)
     alias(libs.plugins.diffplug.spotless)
     alias(libs.plugins.littlerobots.versionCatalogUpdate)
-    alias(libs.plugins.tacascer.monorepo.projectConvention)
 }
 
 group = "io.github.tacascer"

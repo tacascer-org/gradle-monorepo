@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.sonarqube)
-    alias(libs.plugins.tacascer.monorepo.projectConvention)
 }
 
 group = "io.github.tacascer"

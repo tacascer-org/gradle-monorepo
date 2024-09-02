@@ -10,9 +10,9 @@ version = "0.0.1" // x-release-please-version
 
 gradlePlugin {
     plugins {
-        create("projectConventionPlugin") {
-            id = "io.github.tacascer.monorepo.project-convention"
-            implementationClass = "io.github.tacascer.monorepo.project.convention.plugin.MonorepoConventionPlugin"
+        create("monorepoConventionPlugin") {
+            id = "io.github.tacascer.monorepo.settings-convention"
+            implementationClass = "io.github.tacascer.monorepo.settings.MonorepoSettingsPlugin"
         }
     }
 }

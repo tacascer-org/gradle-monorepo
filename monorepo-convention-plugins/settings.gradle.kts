@@ -16,4 +16,4 @@ dependencyResolutionManagement {
     }
 }
 
-include("project-convention-plugin")
+include("settings-convention-plugin")

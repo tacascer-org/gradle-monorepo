@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.sonarqube)
-    id("io.github.tacascer.monorepo.project-convention")
     `jvm-test-suite`
 }
 

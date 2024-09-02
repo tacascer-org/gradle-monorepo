@@ -19,7 +19,7 @@ kotlinx-kover = "org.jetbrains.kotlinx.kover:0.8.3"
 littlerobots-versionCatalogUpdate = "nl.littlerobots.version-catalog-update:0.8.4"
 sonarqube = "org.sonarqube:5.0.0.4638"
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
-tacascer-monorepo-projectConvention = "io.github.tacascer.monorepo.project-convention:+"
+tacascer-monorepo-settingsConvention = "io.github.tacascer.monorepo.settings-convention:+"
 
 [libraries]
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }

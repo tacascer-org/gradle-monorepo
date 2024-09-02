@@ -9,13 +9,13 @@ const val CI_GROUP_NAME = "Build Tasks (CI)"
 const val DEVELOPER_GROUP_NAME = "Build Tasks (Developer)"
 
 /**
- * This plugin adds the following tasks to the root project:
+ * This plugin adds the following tasks for CI:
  * - lintAll task that runs all lint tasks in all subprojects and included builds
  * - checkAll task that runs all check tasks in all subprojects and included builds
  * - qualityCheckAll task that runs all qualityCheck tasks in all subprojects and included builds
  * - buildAll task that runs all build tasks in all subprojects and included builds
  *
- * It also adds the following tasks to each subproject:
+ * It also adds the following tasks for developers:
  * - lint task that runs linters in a project
  * - qualityCheck task that runs quality checks in a project
  */
@@ -26,7 +26,7 @@ class MonorepoSettingsPlugin : Plugin<Settings> {
             project.defineDeveloperTask("qualityCheck", "Run quality checks after tests")
 
             project.defineCITask(
-                TopLevelCITaskConfiguration(
+                CITaskConfiguration(
                     "lintAll",
                     "Run linters before compiling",
                     emptyList(),
@@ -34,7 +34,7 @@ class MonorepoSettingsPlugin : Plugin<Settings> {
             )
 
             project.defineCITask(
-                TopLevelCITaskConfiguration(
+                CITaskConfiguration(
                     "checkAll",
                     "Run all tests",
                     listOf("lintAll"),
@@ -42,7 +42,7 @@ class MonorepoSettingsPlugin : Plugin<Settings> {
             )
 
             project.defineCITask(
-                TopLevelCITaskConfiguration(
+                CITaskConfiguration(
                     "qualityCheckAll",
                     "Run quality checks after tests",
                     listOf("checkAll"),
@@ -50,7 +50,7 @@ class MonorepoSettingsPlugin : Plugin<Settings> {
             )
 
             project.defineCITask(
-                TopLevelCITaskConfiguration(
+                CITaskConfiguration(
                     "buildAll",
                     "Assemble and build all projects",
                     listOf("qualityCheckAll"),
@@ -60,7 +60,7 @@ class MonorepoSettingsPlugin : Plugin<Settings> {
     }
 }
 
-internal fun Project.defineDeveloperTask(
+private fun Project.defineDeveloperTask(
     name: String,
     description: String,
 ) {
@@ -72,7 +72,7 @@ internal fun Project.defineDeveloperTask(
     }
 }
 
-internal fun Project.defineCITask(configuration: TopLevelCITaskConfiguration) {
+private fun Project.defineCITask(configuration: CITaskConfiguration) {
     tasks.register(configuration.name) { task ->
         task.apply {
             group = CI_GROUP_NAME
@@ -90,7 +90,7 @@ internal fun Project.defineCITask(configuration: TopLevelCITaskConfiguration) {
  * @property description The description of the task.
  * @property dependsOn The tasks that this task depends on.
  */
-data class TopLevelCITaskConfiguration(
+data class CITaskConfiguration(
     val name: String,
     val description: String,
     val dependsOn: List<String>,

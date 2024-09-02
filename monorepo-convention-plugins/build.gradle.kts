@@ -38,6 +38,10 @@ sonar {
             "sonar.coverage.jacoco.xmlReportPaths",
             "${layout.buildDirectory.asFile.get()}/reports/kover/report.xml",
         )
+        property(
+            "sonar.userHome",
+            "${layout.buildDirectory.asFile.get()}/.sonar",
+        )
     }
 }
 

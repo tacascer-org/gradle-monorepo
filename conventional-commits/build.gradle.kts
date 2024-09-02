@@ -19,6 +19,10 @@ sonar {
     properties {
         property("sonar.projectKey", "tacascer-org_gradle-monorepo_conventional-commits")
         property("sonar.organization", "tacascer-org")
+        property(
+            "sonar.userHome",
+            "${layout.buildDirectory.asFile.get()}/.sonar",
+        )
     }
 }
 

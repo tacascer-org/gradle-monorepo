@@ -19,13 +19,13 @@ kotlinx-kover = "org.jetbrains.kotlinx.kover:0.8.3"
 littlerobots-versionCatalogUpdate = "nl.littlerobots.version-catalog-update:0.8.4"
 sonarqube = "org.sonarqube:5.0.0.4638"
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
-tacascer-monorepo-settingsConvention = "io.github.tacascer.monorepo.settings-convention:+"
 
 [libraries]
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 kotest-extensions-spring = "io.kotest.extensions:kotest-extensions-spring:1.3.0"
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-runnerJunit5 = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotest-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 liquibase-core = { module = "org.liquibase:liquibase-core" }
 mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }

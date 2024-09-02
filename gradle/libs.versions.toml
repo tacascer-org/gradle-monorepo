@@ -8,6 +8,8 @@ springBoot = "3.3.3"
 adarshr-testLogger = "com.adarshr.test-logger:4.0.0"
 benManes-versions = "com.github.ben-manes.versions:0.51.0"
 diffplug-spotless = "com.diffplug.spotless:7.0.0.BETA2"
+gradle-pluginPublish = "com.gradle.plugin-publish:1.2.1"
+gradleup-shadow = "com.gradleup.shadow:8.3.0"
 kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
 kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -17,6 +19,7 @@ kotlinx-kover = "org.jetbrains.kotlinx.kover:0.8.3"
 littlerobots-versionCatalogUpdate = "nl.littlerobots.version-catalog-update:0.8.4"
 sonarqube = "org.sonarqube:5.0.0.4638"
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
+tacascer-monorepo-projectConvention = "io.github.tacascer.monorepo.project-convention:+"
 
 [libraries]
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }

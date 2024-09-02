@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.sonarqube)
+    alias(libs.plugins.tacascer.monorepo.projectConvention)
 }
 
 group = "io.github.tacascer"
@@ -17,12 +18,6 @@ sonar {
     }
 }
 
-val checkAll by tasks.registering {
-    dependsOn(tasks.check)
-}
-
-val qualityCheckAll by tasks.registering {
+tasks.qualityCheckAll {
     dependsOn(tasks.sonar)
 }
-
-val lintAll by tasks.registering {}

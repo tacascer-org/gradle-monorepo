@@ -14,6 +14,9 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
     }
+    pluginManagement {
+        includeBuild("monorepo-convention-plugins")
+    }
 }
 
 rootProject.name = "gradle-monorepo"

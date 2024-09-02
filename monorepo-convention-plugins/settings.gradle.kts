@@ -1,15 +1,19 @@
-rootProject.name = "conventional-commits"
+rootProject.name = "monorepo-convention-plugins"
 
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-    }
-    pluginManagement {
-        includeBuild("../monorepo-convention-plugins")
     }
     versionCatalogs {
         create("libs") {
             from(files("../gradle/libs.versions.toml"))
         }
     }
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+        }
+    }
 }
+
+include("project-convention-plugin")

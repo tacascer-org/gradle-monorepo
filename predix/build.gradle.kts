@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.sonarqube)
+    id("io.github.tacascer.monorepo.project-convention")
     `jvm-test-suite`
 }
 
@@ -94,10 +95,10 @@ tasks.sonar {
     dependsOn(tasks.koverXmlReport)
 }
 
-val lint by tasks.registering {
+tasks.lint {
     dependsOn(tasks.spotlessApply)
 }
 
-val qualityCheck by tasks.registering {
+tasks.qualityCheck {
     dependsOn(tasks.sonar)
 }

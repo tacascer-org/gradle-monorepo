@@ -13,12 +13,6 @@ spotless {
     }
 }
 
-val ciBuildGroup = "Build Tasks (CI)"
-
-tasks.named<TaskReportTask>("tasks") {
-    displayGroups = listOf(ciBuildGroup)
-}
-
 tasks.lintAll {
     dependsOn(tasks.spotlessApply)
     dependsOn(tasks.versionCatalogFormat)

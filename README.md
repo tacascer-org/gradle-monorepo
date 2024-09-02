@@ -2,6 +2,6 @@
 
 Gradle Monorepo
 
-## Development Set-up
+## Contribution Guidelines
 
-Run `./gradlew buildAll` to build the project.
+Run `./gradlew tasks` to see which tasks are available.

@@ -17,7 +17,7 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 kotlinx-kover = "org.jetbrains.kotlinx.kover:0.8.3"
 littlerobots-versionCatalogUpdate = "nl.littlerobots.version-catalog-update:0.8.4"
-sonarqube = "org.sonarqube:5.0.0.4638"
+sonarqube = "org.sonarqube:5.1.0.4882"
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
 
 [libraries]

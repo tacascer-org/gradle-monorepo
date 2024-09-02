@@ -2,7 +2,7 @@ package io.github.tacascer.monorepo.settings
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
-import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.shouldBe
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 
@@ -49,7 +49,7 @@ class MonorepoSettingsPluginTest :
                         .withPluginClasspath()
                         .build()
 
-                result.task(":$it")?.outcome shouldNotBe TaskOutcome.UP_TO_DATE
+                result.task(":$it")?.outcome shouldBe TaskOutcome.UP_TO_DATE
             }
         }
     })

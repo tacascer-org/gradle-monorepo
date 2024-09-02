@@ -19,3 +19,7 @@ sonar {
         property("sonar.organization", "tacascer-org")
     }
 }
+
+qualityCheckAll {
+    dependsOn(tasks.sonar)
+}

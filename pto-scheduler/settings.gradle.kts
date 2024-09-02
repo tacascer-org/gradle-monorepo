@@ -5,7 +5,7 @@ pluginManagement {
 }
 
 plugins {
-    id("io.github.tacascer.monorepo.settings-convention") version "+"
+    id("io.github.tacascer.monorepo.settings-convention")
 }
 
 dependencyResolutionManagement {

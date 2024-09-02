@@ -1,0 +1,16 @@
+{
+  "packages": {
+    "predix": {
+      "release-type": "go",
+      "extra-files": ["build.gradle.kts"]
+    },
+    "pto-scheduler": {
+      "release-type": "go",
+      "extra-files": ["build.gradle.kts"]
+    },
+    "monorepo-convention-plugins": {
+      "release-type": "go",
+      "extra-files": ["build.gradle.kts"]
+    }
+  }
+}

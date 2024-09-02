@@ -7,7 +7,7 @@ version = "0.0.1" // x-release-please-version
 // Duplicating functionality of project convention plugin because it is not available in the monorepo-convention-plugins project.
 val lintAll by tasks.registering { }
 
-val checkALl by tasks.registering { }
+val checkAll by tasks.registering { }
 
 val qualityCheckAll by tasks.registering { }
 

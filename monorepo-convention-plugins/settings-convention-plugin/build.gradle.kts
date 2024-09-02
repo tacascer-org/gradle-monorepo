@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.tacascer"
-version = "0.0.1" // x-release-please-version
+version = rootProject.version
 
 gradlePlugin {
     plugins {

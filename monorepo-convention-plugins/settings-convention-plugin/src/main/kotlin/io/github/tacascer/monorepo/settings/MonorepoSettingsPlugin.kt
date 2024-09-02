@@ -24,21 +24,41 @@ const val DEVELOPER_GROUP_NAME = "Developer"
 class MonorepoSettingsPlugin : Plugin<Settings> {
     override fun apply(settings: Settings) {
         settings.gradle.lifecycle.beforeProject { project ->
-            project.pluginManager.apply(BasePlugin::class.java)
-            project.defineDeveloperTasks()
-            project.defineCITasks()
+            configureProject(project)
         }
         settings.gradle.lifecycle.afterProject { project ->
-            project.tasks.named("build") {
-                it.group = DEVELOPER_GROUP_NAME
-            }
-            project.tasks.named("check") {
-                it.group = DEVELOPER_GROUP_NAME
-            }
-            project.tasks.named("tasks", TaskReportTask::class.java) {
-                it.displayGroups = listOf(CI_GROUP_NAME, DEVELOPER_GROUP_NAME)
-            }
+            configureExistingTasks(project)
         }
+    }
+}
+
+private fun configureProject(project: Project) {
+    project.pluginManager.apply(BasePlugin::class.java)
+    project.defineDeveloperTasks()
+    project.defineCITasks()
+}
+
+private fun configureExistingTasks(project: Project) {
+    project.configureBuildTask()
+    project.configureCheckTask()
+    project.configureTasksTask()
+}
+
+private fun Project.configureBuildTask() {
+    tasks.named("build") {
+        it.group = DEVELOPER_GROUP_NAME
+    }
+}
+
+private fun Project.configureCheckTask() {
+    tasks.named("check") {
+        it.group = DEVELOPER_GROUP_NAME
+    }
+}
+
+private fun Project.configureTasksTask() {
+    tasks.named("tasks", TaskReportTask::class.java) {
+        it.displayGroups = listOf(CI_GROUP_NAME, DEVELOPER_GROUP_NAME)
     }
 }
 
@@ -104,7 +124,7 @@ private fun Project.registerCITasks(configuration: CITaskConfiguration) {
  * @property name The name of the task if it's applied to the root project (i.e. a `settings.gradle.kts` file).
  * @property dependsOn The tasks that this task depends on.
  */
-data class CITaskConfiguration(
+private data class CITaskConfiguration(
     val name: String,
     val dependsOn: List<String>,
 ) {

@@ -49,7 +49,7 @@ class MonorepoSettingsPluginTest :
                         .withPluginClasspath()
                         .build()
 
-                result.task(":$it")?.outcome shouldNotBe TaskOutcome.FAILED
+                result.task(":$it")?.outcome shouldNotBe TaskOutcome.UP_TO_DATE
             }
         }
     })

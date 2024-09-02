@@ -17,12 +17,6 @@ sonar {
     }
 }
 
-val checkAll by tasks.registering {
-    dependsOn(tasks.check)
-}
-
-val qualityCheckAll by tasks.registering {
+tasks.qualityCheck {
     dependsOn(tasks.sonar)
 }
-
-val lintAll by tasks.registering {}

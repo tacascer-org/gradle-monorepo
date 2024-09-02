@@ -1,12 +1,4 @@
-rootProject.name = "conventional-commits"
-
-pluginManagement {
-    includeBuild("../monorepo-convention-plugins")
-}
-
-plugins {
-    id("io.github.tacascer.monorepo.settings-convention") version "+"
-}
+rootProject.name = "monorepo-convention-plugins"
 
 dependencyResolutionManagement {
     repositories {
@@ -17,4 +9,11 @@ dependencyResolutionManagement {
             from(files("../gradle/libs.versions.toml"))
         }
     }
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+        }
+    }
 }
+
+include("settings-convention-plugin")

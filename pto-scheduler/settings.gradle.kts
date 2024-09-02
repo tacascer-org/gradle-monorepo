@@ -1,4 +1,4 @@
-rootProject.name = "conventional-commits"
+rootProject.name = "pto-scheduler"
 
 pluginManagement {
     includeBuild("../monorepo-convention-plugins")

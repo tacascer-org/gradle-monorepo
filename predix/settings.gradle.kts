@@ -1,4 +1,4 @@
-rootProject.name = "conventional-commits"
+rootProject.name = "predix"
 
 pluginManagement {
     includeBuild("../monorepo-convention-plugins")

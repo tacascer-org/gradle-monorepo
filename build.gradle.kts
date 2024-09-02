@@ -17,3 +17,7 @@ tasks.lintAll {
     dependsOn(tasks.spotlessApply)
     dependsOn(tasks.versionCatalogFormat)
 }
+
+val testClasses by tasks.registering {
+    description = "Dummy task for CodeQL Autobuild"
+}

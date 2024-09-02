@@ -13,7 +13,6 @@ val qualityCheck by tasks.registering { }
 
 val lintAll by tasks.registering {
     dependsOn(lint)
-    dependsOn(subprojects.map { "${it.name}:lintAll" })
 }
 
 val checkAll by tasks.registering {

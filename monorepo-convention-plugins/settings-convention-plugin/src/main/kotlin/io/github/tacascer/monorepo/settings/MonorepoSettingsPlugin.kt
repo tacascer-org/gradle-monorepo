@@ -27,49 +27,55 @@ class MonorepoSettingsPlugin : Plugin<Settings> {
             project.defineCITasks()
         }
         settings.gradle.lifecycle.afterProject { project ->
+            project.tasks.named("build") {
+                it.group = DEVELOPER_GROUP_NAME
+            }
+            project.tasks.named("check") {
+                it.group = DEVELOPER_GROUP_NAME
+            }
             project.tasks.named("tasks", TaskReportTask::class.java) {
                 it.displayGroups = listOf(CI_GROUP_NAME, DEVELOPER_GROUP_NAME)
             }
         }
     }
-
-    private fun Project.defineDeveloperTasks() {
-        defineDeveloperTask("lint")
-        defineDeveloperTask("qualityCheck")
-    }
-
-    private fun Project.defineCITasks() {
-        defineCITask(
-            CITaskConfiguration(
-                "lintAll",
-                emptyList(),
-            ),
-        )
-
-        defineCITask(
-            CITaskConfiguration(
-                "checkAll",
-                listOf("lintAll"),
-            ),
-        )
-
-        defineCITask(
-            CITaskConfiguration(
-                "qualityCheckAll",
-                listOf("checkAll"),
-            ),
-        )
-
-        defineCITask(
-            CITaskConfiguration(
-                "buildAll",
-                listOf("qualityCheckAll"),
-            ),
-        )
-    }
 }
 
-private fun Project.defineDeveloperTask(name: String) {
+private fun Project.defineDeveloperTasks() {
+    registerDeveloperTasks("lint")
+    registerDeveloperTasks("qualityCheck")
+}
+
+private fun Project.defineCITasks() {
+    registerCITasks(
+        CITaskConfiguration(
+            "lintAll",
+            emptyList(),
+        ),
+    )
+
+    registerCITasks(
+        CITaskConfiguration(
+            "checkAll",
+            listOf("lintAll"),
+        ),
+    )
+
+    registerCITasks(
+        CITaskConfiguration(
+            "qualityCheckAll",
+            listOf("checkAll"),
+        ),
+    )
+
+    registerCITasks(
+        CITaskConfiguration(
+            "buildAll",
+            listOf("qualityCheckAll"),
+        ),
+    )
+}
+
+private fun Project.registerDeveloperTasks(name: String) {
     tasks.register(name) { task ->
         task.apply {
             group = DEVELOPER_GROUP_NAME
@@ -78,7 +84,7 @@ private fun Project.defineDeveloperTask(name: String) {
     }
 }
 
-private fun Project.defineCITask(configuration: CITaskConfiguration) {
+private fun Project.registerCITasks(configuration: CITaskConfiguration) {
     tasks.register(configuration.name) { task ->
         task.apply {
             group = CI_GROUP_NAME

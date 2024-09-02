@@ -1,4 +1,5 @@
 plugins {
+    base
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.kotlinx.kover)
 }
@@ -6,13 +7,25 @@ plugins {
 version = "0.0.1" // x-release-please-version
 
 // Duplicating functionality of project convention plugin because it is not available in the monorepo-convention-plugins project.
-val lintAll by tasks.registering { }
+val lint by tasks.registering { }
 
-val checkAll by tasks.registering { }
+val qualityCheck by tasks.registering { }
 
-val qualityCheckAll by tasks.registering { }
+val lintAll by tasks.registering {
+    dependsOn(lint)
+    dependsOn(subprojects.map { "${it.name}:lintAll" })
+}
 
-val buildAll by tasks.registering { }
+val checkAll by tasks.registering {
+    dependsOn(subprojects.map { "${it.name}:checkAll" })
+}
+
+val qualityCheckAll by tasks.registering {
+    dependsOn(checkAll)
+    dependsOn(qualityCheck)
+}
+
+val buildAll by tasks.registering { dependsOn(qualityCheckAll) }
 
 dependencies {
     kover(project(":settings-convention-plugin"))
@@ -33,6 +46,6 @@ tasks.sonar {
     dependsOn(tasks.koverXmlReport)
 }
 
-qualityCheckAll {
+qualityCheck {
     dependsOn(tasks.sonar)
 }

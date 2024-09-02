@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     `java-gradle-plugin`
     `jvm-test-suite`
@@ -35,6 +37,19 @@ gradlePlugin {
     testSourceSets(sourceSets.getByName("functionalTest"))
 }
 
+dependencies {
+    shadow(localGroovy())
+    shadow(gradleApi())
+}
+
+tasks.named("shadowJar", ShadowJar::class) {
+    isEnableRelocation = true
+}
+
 tasks.check {
     dependsOn(testing.suites.named("functionalTest"))
+}
+
+val checkAll by tasks.registering {
+    dependsOn(tasks.check)
 }

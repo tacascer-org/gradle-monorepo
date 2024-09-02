@@ -3,6 +3,7 @@ package io.github.tacascer.monorepo.settings
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
+import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.tasks.diagnostics.TaskReportTask
 
 const val CI_GROUP_NAME = "CI"
@@ -23,6 +24,7 @@ const val DEVELOPER_GROUP_NAME = "Developer"
 class MonorepoSettingsPlugin : Plugin<Settings> {
     override fun apply(settings: Settings) {
         settings.gradle.lifecycle.beforeProject { project ->
+            project.pluginManager.apply(BasePlugin::class.java)
             project.defineDeveloperTasks()
             project.defineCITasks()
         }

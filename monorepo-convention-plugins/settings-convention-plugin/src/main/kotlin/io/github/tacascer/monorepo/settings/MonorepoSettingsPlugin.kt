@@ -39,27 +39,9 @@ private fun configureProject(project: Project) {
 }
 
 private fun configureExistingTasks(project: Project) {
-    project.configureBuildTask()
     project.configureCheckTask()
+    project.configureBuildTask()
     project.configureTasksTask()
-}
-
-private fun Project.configureBuildTask() {
-    tasks.named("build") {
-        it.group = DEVELOPER_GROUP_NAME
-    }
-}
-
-private fun Project.configureCheckTask() {
-    tasks.named("check") {
-        it.group = DEVELOPER_GROUP_NAME
-    }
-}
-
-private fun Project.configureTasksTask() {
-    tasks.named("tasks", TaskReportTask::class.java) {
-        it.displayGroups = listOf(CI_GROUP_NAME, DEVELOPER_GROUP_NAME)
-    }
 }
 
 private fun Project.defineDeveloperTasks() {
@@ -116,6 +98,26 @@ private fun Project.registerCITasks(configuration: CITaskConfiguration) {
             dependsOn(subprojects.map { "${it.name}:${configuration.developerTaskName}" })
             dependsOn(gradle.includedBuilds.map { it.task(":${configuration.name}") })
         }
+    }
+}
+
+private fun Project.configureCheckTask() {
+    tasks.named("check") {
+        it.dependsOn(tasks.named("lint"))
+        it.group = DEVELOPER_GROUP_NAME
+    }
+}
+
+private fun Project.configureBuildTask() {
+    tasks.named("build") {
+        it.dependsOn("qualityCheck")
+        it.group = DEVELOPER_GROUP_NAME
+    }
+}
+
+private fun Project.configureTasksTask() {
+    tasks.named("tasks", TaskReportTask::class.java) {
+        it.displayGroups = listOf(CI_GROUP_NAME, DEVELOPER_GROUP_NAME)
     }
 }
 

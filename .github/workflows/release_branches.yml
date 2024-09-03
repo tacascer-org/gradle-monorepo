@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: googleapis/release-please-action@v4
         with:
-          target-branch: ${{ github.ref_name }}
+          token: ${{secrets.PAT_TOKEN}}

@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    id("kotlin-spring-conventions")
 }
 
-group = "io.github.tacascer"
+group = "com.github.lowkeylab"
 version = "0.0.1" // x-release-please-version

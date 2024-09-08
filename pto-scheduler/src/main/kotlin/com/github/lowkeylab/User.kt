@@ -30,7 +30,7 @@ class User(
         validateState()
 
         while (usedPtoDays < maxPtoDays) {
-            usePtoDay(LocalDate.ofYearDay(date.year, Random.nextInt(date.dayOfYear, date.lengthOfYear())))
+            usePtoDay(LocalDate.ofYearDay(date.year, Random.nextInt(date.dayOfYear + 1, date.lengthOfYear())))
         }
     }
 

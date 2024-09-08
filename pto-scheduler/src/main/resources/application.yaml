@@ -1,8 +1,15 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-decorator:
-  datasource:
-    datasource-proxy:
-      query:
-        log-level: info
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.batch_size: 50
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+  threads:
+    virtual:
+      enabled: true
+server:
+  shutdown: graceful

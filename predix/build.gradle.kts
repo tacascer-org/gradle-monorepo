@@ -1,15 +1,14 @@
 plugins {
-    alias(libs.plugins.adarshr.testLogger)
-    alias(libs.plugins.diffplug.spotless)
+    `jvm-test-suite`
     alias(libs.plugins.kotlin.allopen)
     alias(libs.plugins.kotlin.jpa)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.kotlinx.kover)
-    alias(libs.plugins.spring.boot)
     alias(libs.plugins.sonarqube)
-    `jvm-test-suite`
+    alias(libs.plugins.spring.boot)
+    id("kotlin-conventions")
 }
 
 group = "io.github.tacascer"
@@ -63,19 +62,6 @@ testing {
                 implementation(libs.testcontainers.postgresql)
             }
         }
-    }
-}
-
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xjsr305=strict")
-    }
-    jvmToolchain(21)
-}
-
-spotless {
-    kotlin {
-        ktlint()
     }
 }
 

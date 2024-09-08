@@ -16,7 +16,7 @@ val lintAll by tasks.registering {
 }
 
 val checkAll by tasks.registering {
-    dependsOn(subprojects.map { "${it.name}:checkAll" })
+    dependsOn(subprojects.map { "${it.name}:check" })
 }
 
 val qualityCheckAll by tasks.registering {

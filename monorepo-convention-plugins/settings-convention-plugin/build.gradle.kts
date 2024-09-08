@@ -49,7 +49,3 @@ tasks.named("shadowJar", ShadowJar::class) {
 tasks.check {
     dependsOn(testing.suites.named("functionalTest"))
 }
-
-val checkAll by tasks.registering {
-    dependsOn(tasks.check)
-}

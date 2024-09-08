@@ -20,7 +20,7 @@ spotless {
     }
 }
 
-tasks.getByName("lint") {
+tasks.named("lint") {
     dependsOn(tasks.spotlessApply)
 }
 

@@ -1,4 +1,5 @@
-pto-scheduler/  @tacascer-org/pto-scheduler
-*.gradle.kts    @tacascer-org/build-eng
-gradle/         @tacascer-org/build-eng
-.github/        @tacascer-org/build-eng
+pto-scheduler/  @LowkeyLab/pto-scheduler
+*.gradle.kts    @LowkeyLab/build-eng
+gradle/         @LowkeyLab/build-eng
+.github/        @LowkeyLab/build-eng
+monorepo-convention-plugins/   @LowkeyLab/build-eng

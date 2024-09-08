@@ -5,8 +5,16 @@ import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
 import org.springframework.transaction.annotation.Transactional
 
 interface UserService {
+    /**
+     * Find a user by their ID.
+     * @return The user, or null if not found.
+     */
     fun findUserById(id: Long): User?
 
+    /**
+     * Create a new user.
+     * @return The newly created user.
+     */
     fun createNew(
         name: String,
         maxPtoDays: Int,

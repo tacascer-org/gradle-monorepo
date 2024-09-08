@@ -2,7 +2,7 @@ package com.github.lowkeylab.ptoscheduler
 
 import com.github.lowkeylab.ptoscheduler.user.service.UserService
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.equality.shouldBeEqualUsingFields
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 
@@ -16,7 +16,7 @@ class PtoSchedulerApplicationTest(
                 val createdUser = userService.createNew("John Doe", 20)
 
                 val foundUser = userService.findUserById(createdUser.id!!)
-                foundUser.shouldNotBeNull()
+                foundUser!! shouldBeEqualUsingFields createdUser
             }
         },
     )

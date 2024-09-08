@@ -38,7 +38,7 @@ class JpaUserRepository(
 ) : UserRepository {
     override fun findUserById(id: Long): User? {
         val userEntity = userEntityRepository.findById(id).orElse(null)
-        return userEntity?.let { User(it.name, it.maxPtoDays, it.ptoDays) }
+        return userEntity?.let { userEntityMapper.toDto(it) }
     }
 
     override fun save(user: User): User = userEntityMapper.toDto(userEntityRepository.save(userEntityMapper.toEntity(user)))

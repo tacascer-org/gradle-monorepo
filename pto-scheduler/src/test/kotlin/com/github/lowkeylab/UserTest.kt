@@ -87,4 +87,17 @@ class UserTest :
                 it.shouldBeAfter(date)
             }
         }
+
+        test("Cannot randomly use remaining PTO days if the anchor date is too late in the year") {
+            val user =
+                User(
+                    name = "John Doe",
+                    maxPtoDays = 20,
+                )
+            val date = LocalDate.of(2022, 12, 31)
+
+            shouldThrow<IllegalArgumentException> {
+                user.randomlyUseRemainingPtoDaysAfter(date)
+            }
+        }
     })

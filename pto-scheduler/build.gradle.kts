@@ -6,6 +6,25 @@ plugins {
 group = "com.github.lowkeylab"
 version = "0.0.1" // x-release-please-version
 
+dependencies {
+    implementation(libs.gavlyukovskiy.datasourceProxy)
+    implementation(libs.liquibase.core)
+    implementation(libs.mapstruct)
+    implementation(libs.spring.boot.starterDataJpa)
+    kapt(libs.mapstruct.processor)
+    runtimeOnly(libs.postgresql)
+}
+
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            dependencies {
+                implementation(libs.testcontainers.postgresql)
+            }
+        }
+    }
+}
+
 tasks.sonar {
     dependsOn(tasks.koverXmlReport)
 }

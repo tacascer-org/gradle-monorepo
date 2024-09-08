@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1725806828800-1
+      author: p
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: user_entity_seq
+            startValue: 1
+  - changeSet:
+      id: 1725806828800-2
+      author: p
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user_entity
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: max_pto_days
+                  type: INT
+            tableName: user_entity
+  - changeSet:
+      id: 1725806828800-3
+      author: p
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_entity_id
+                  type: BIGINT
+              - column:
+                  name: pto_days
+                  type: DATE
+            tableName: user_entity_pto_days
+  - changeSet:
+      id: 1725806828800-4
+      author: p
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_entity_id
+            baseTableName: user_entity_pto_days
+            constraintName: fk_userentity_ptodays_on_user_entity
+            referencedColumnNames: id
+            referencedTableName: user_entity

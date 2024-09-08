@@ -1,14 +1,14 @@
-package com.github.lowkeylab
+package com.github.lowkeylab.ptoscheduler.user
 
 import java.time.LocalDate
 import kotlin.random.Random
 
 class User(
     val name: String,
-    private val maxPtoDays: Int,
+    val maxPtoDays: Int,
+    val ptoDays: MutableSet<LocalDate> = mutableSetOf(),
+    val id: Long? = null,
 ) {
-    val ptoDays = mutableSetOf<LocalDate>()
-
     private val usedPtoDays: Int
         get() = ptoDays.size
 

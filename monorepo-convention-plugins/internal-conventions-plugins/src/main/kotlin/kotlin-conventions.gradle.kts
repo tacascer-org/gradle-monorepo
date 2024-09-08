@@ -16,3 +16,7 @@ spotless {
         ktlint()
     }
 }
+
+tasks.getByName("lint") {
+    dependsOn(tasks.spotlessApply)
+}

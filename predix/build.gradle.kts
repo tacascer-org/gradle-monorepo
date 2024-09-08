@@ -84,10 +84,6 @@ tasks.sonar {
     dependsOn(tasks.koverXmlReport)
 }
 
-tasks.lint {
-    dependsOn(tasks.spotlessApply)
-}
-
 tasks.qualityCheck {
     dependsOn(tasks.sonar)
 }

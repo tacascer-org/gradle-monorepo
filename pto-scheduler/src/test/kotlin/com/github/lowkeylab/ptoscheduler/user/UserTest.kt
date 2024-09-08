@@ -1,4 +1,4 @@
-package com.github.lowkeylab
+package com.github.lowkeylab.ptoscheduler.user
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec

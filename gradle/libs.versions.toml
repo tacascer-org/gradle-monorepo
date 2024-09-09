@@ -53,6 +53,7 @@ spring-boot-starterActuator = { module = "org.springframework.boot:spring-boot-s
 spring-boot-starterDataJpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "springBoot" }
 spring-boot-starterTest = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "springBoot" }
 spring-boot-starterWeb = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
+spring-boot-starterWebflux = { module = "org.springframework.boot:spring-boot-starter-webflux", version.ref = "springBoot" }
 spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers", version.ref = "springBoot" }
 springdoc-openApiStarterWebMvcUi = "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0"
 testcontainers-junitJupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }

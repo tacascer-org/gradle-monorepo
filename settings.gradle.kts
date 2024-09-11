@@ -28,4 +28,3 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 includeBuild("pto-scheduler")
 includeBuild("predix")
-includeBuild("conventional-commits")

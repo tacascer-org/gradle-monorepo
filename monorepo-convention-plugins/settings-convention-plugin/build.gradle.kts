@@ -44,6 +44,11 @@ dependencies {
 
 tasks.named("shadowJar", ShadowJar::class) {
     isEnableRelocation = true
+    archiveClassifier = ""
+}
+
+tasks.jar {
+    archiveClassifier = "plain"
 }
 
 tasks.check {

@@ -3,12 +3,14 @@ package com.github.lowkeylab.ptoscheduler.user.service
 import com.github.lowkeylab.ptoscheduler.TestcontainersConfiguration
 import com.github.lowkeylab.ptoscheduler.user.User
 import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
+import com.github.lowkeylab.ptoscheduler.user.resetDatabase
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.equality.shouldBeEqualUsingFields
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.transaction.support.TransactionTemplate
 import java.time.LocalDate
 
@@ -18,7 +20,9 @@ class UserServiceTest(
     sut: UserService,
     userRepository: UserRepository,
     transactionTemplate: TransactionTemplate,
+    jdbcTemplate: JdbcTemplate,
 ) : FunSpec({
+        beforeEach(resetDatabase(jdbcTemplate))
         test("can create new user") {
             val createdUser = sut.createNew("John Doe", 20)
 

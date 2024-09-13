@@ -3,11 +3,13 @@ package com.github.lowkeylab.ptoscheduler.user.controller
 import com.github.lowkeylab.ptoscheduler.TestcontainersConfiguration
 import com.github.lowkeylab.ptoscheduler.user.User
 import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
+import com.github.lowkeylab.ptoscheduler.user.resetDatabase
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.equality.shouldBeEqualUsingFields
 import io.kotest.matchers.shouldBe
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.web.servlet.client.MockMvcWebTestClient
 import java.time.LocalDate
 
@@ -16,7 +18,9 @@ import java.time.LocalDate
 class UserControllerTest(
     userRepository: UserRepository,
     sut: UserController,
+    jdbcTemplate: JdbcTemplate,
 ) : FunSpec({
+        beforeEach(resetDatabase(jdbcTemplate))
         val webTestClient =
             MockMvcWebTestClient
                 .bindToController(sut)

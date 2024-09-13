@@ -1,12 +1,28 @@
 package com.github.lowkeylab.ptoscheduler.user
 
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 import java.time.LocalDate
 import kotlin.random.Random
 
+@Entity
+@Table(name = "users")
 class User(
+    @Column(nullable = false)
     val name: String,
+    @Column(nullable = false)
     val maxPtoDays: Int,
+    @ElementCollection(fetch = FetchType.EAGER)
     val ptoDays: MutableSet<LocalDate> = mutableSetOf(),
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
     val id: Long? = null,
 ) {
     private val usedPtoDays: Int
@@ -26,7 +42,7 @@ class User(
         ptoDays.add(date)
     }
 
-    fun randomlyUseRemainingPtoDaysAfter(date: LocalDate) {
+    fun randomizePtoDaysAfter(date: LocalDate) {
         validateState()
 
         while (usedPtoDays < maxPtoDays) {

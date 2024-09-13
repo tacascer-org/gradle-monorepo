@@ -1,20 +1,50 @@
 package com.github.lowkeylab.ptoscheduler.user.service
 
-import com.github.lowkeylab.ptoscheduler.TestcontainersConfiguration
+import com.github.lowkeylab.ptoscheduler.user.IntegrationTest
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.shouldExist
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.withMaxPtoDays
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.withName
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.withNoPtoDaysLeft
+import com.github.lowkeylab.ptoscheduler.user.createUser
+import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
+import com.github.lowkeylab.ptoscheduler.user.resetDatabase
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.equality.shouldBeEqualUsingFields
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.transaction.support.TransactionTemplate
+import java.time.LocalDate
 
-@Import(TestcontainersConfiguration::class)
-@SpringBootTest
+@IntegrationTest
 class UserServiceTest(
-    userService: UserService,
+    sut: UserService,
+    userRepository: UserRepository,
+    transactionTemplate: TransactionTemplate,
+    jdbcTemplate: JdbcTemplate,
 ) : FunSpec({
+        beforeEach(resetDatabase(jdbcTemplate))
         test("can create new user") {
-            val createdUser = userService.createNew("John Doe", 20)
+            val createdUser = sut.createNew("John Doe", 20)
 
-            val foundUser = userService.findUserById(createdUser.id!!)
-            foundUser!! shouldBeEqualUsingFields createdUser
+            transactionTemplate.execute {
+                val foundUser = userRepository.findByIdOrNull(createdUser.id!!)
+                foundUser.shouldExist().shouldBeEqualUsingFields(createdUser)
+            }
+        }
+
+        test("can randomize user's PTO days after a certain date") {
+            val user = createUser("John Doe", 20, userRepository)
+            val date = LocalDate.of(2022, 1, 1)
+
+            sut.randomizePtoDays(user.id!!, date)
+
+            transactionTemplate.execute {
+                val foundUser = userRepository.findByIdOrNull(user.id!!)
+                foundUser
+                    .shouldExist()
+                    .withName("John Doe")
+                    .withMaxPtoDays(20)
+                    .withNoPtoDaysLeft()
+            }
         }
     })

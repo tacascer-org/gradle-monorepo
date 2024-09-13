@@ -17,7 +17,7 @@ class UserController(
     @PostMapping
     fun createNew(
         @RequestBody
-        user: NewUserDto,
+        user: CreateNewUserModel,
     ): User = userService.createNew(user.name, user.maxPtoDays)
 
     @GetMapping("/{id}")
@@ -26,7 +26,7 @@ class UserController(
     ): User? = userService.findUserById(id)
 }
 
-data class NewUserDto(
+data class CreateNewUserModel(
     val name: String,
     val maxPtoDays: Int,
 )

@@ -25,7 +25,7 @@ interface UserService {
 class UserServiceImpl(
     private val userRepository: UserRepository,
 ) : UserService {
-    override fun findUserById(id: Long) = userRepository.findUserById(id)
+    override fun findUserById(id: Long) = userRepository.findById(id)
 
     @Transactional
     override fun createNew(

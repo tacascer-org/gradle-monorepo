@@ -27,7 +27,7 @@ class UserEntity(
 interface UserEntityRepository : JpaRepository<UserEntity, Long>
 
 interface UserRepository {
-    fun findUserById(id: Long): User?
+    fun findById(id: Long): User?
 
     fun save(user: User): User
 }
@@ -36,7 +36,7 @@ class JpaUserRepository(
     private val userEntityRepository: UserEntityRepository,
     private val userEntityMapper: UserEntityMapper,
 ) : UserRepository {
-    override fun findUserById(id: Long): User? {
+    override fun findById(id: Long): User? {
         val userEntity = userEntityRepository.findById(id).orElse(null)
         return userEntity?.let { userEntityMapper.toDto(it) }
     }

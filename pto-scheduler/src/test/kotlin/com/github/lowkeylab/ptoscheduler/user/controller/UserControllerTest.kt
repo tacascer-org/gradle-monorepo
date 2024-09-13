@@ -12,11 +12,11 @@ import org.springframework.test.web.servlet.client.MockMvcWebTestClient
 @Import(TestcontainersConfiguration::class)
 @SpringBootTest
 class UserControllerTest(
-    userController: UserController,
+    sut: UserController,
 ) : FunSpec({
-        val sut =
+        val webTestClient =
             MockMvcWebTestClient
-                .bindToController(userController)
+                .bindToController(sut)
                 .configureClient()
                 .baseUrl("/users")
                 .build()
@@ -24,12 +24,12 @@ class UserControllerTest(
         test("can create new user") {
             val name = "John Doe"
             val maxPtoDays = 20
-            val newUserDto = NewUserDto(name, maxPtoDays)
+            val createNewUserModel = CreateNewUserModel(name, maxPtoDays)
 
             val output =
-                sut
+                webTestClient
                     .post()
-                    .bodyValue(newUserDto)
+                    .bodyValue(createNewUserModel)
                     .exchange()
                     .expectStatus()
                     .isOk
@@ -42,11 +42,11 @@ class UserControllerTest(
         }
 
         test("can find user by id") {
-            val newUserDto = NewUserDto("John Doe", 20)
+            val createNewUserModel = CreateNewUserModel("John Doe", 20)
             val user =
-                sut
+                webTestClient
                     .post()
-                    .bodyValue(newUserDto)
+                    .bodyValue(createNewUserModel)
                     .exchange()
                     .expectStatus()
                     .isOk
@@ -55,7 +55,7 @@ class UserControllerTest(
                     .responseBody!!
 
             val output =
-                sut
+                webTestClient
                     .get()
                     .uri("/${user.id}")
                     .exchange()

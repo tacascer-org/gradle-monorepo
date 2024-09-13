@@ -1,11 +1,14 @@
 package com.github.lowkeylab.ptoscheduler.user.service
 
 import com.github.lowkeylab.ptoscheduler.user.IntegrationTest
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.shouldExist
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.withMaxPtoDays
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.withName
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.withNoPtoDaysLeft
 import com.github.lowkeylab.ptoscheduler.user.createUser
 import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
 import com.github.lowkeylab.ptoscheduler.user.resetDatabase
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.equality.shouldBeEqualUsingFields
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.jdbc.core.JdbcTemplate
@@ -24,8 +27,8 @@ class UserServiceTest(
             val createdUser = sut.createNew("John Doe", 20)
 
             transactionTemplate.execute {
-                val foundUser = userRepository.findByIdOrNull(createdUser.id!!)!!
-                foundUser shouldBeEqualUsingFields createdUser
+                val foundUser = userRepository.findByIdOrNull(createdUser.id!!)
+                foundUser.shouldExist().shouldBeEqualUsingFields(createdUser)
             }
         }
 
@@ -36,8 +39,12 @@ class UserServiceTest(
             sut.randomizePtoDays(user.id!!, date)
 
             transactionTemplate.execute {
-                val foundUser = userRepository.findByIdOrNull(user.id!!)!!
-                foundUser.ptoDays shouldHaveSize 20
+                val foundUser = userRepository.findByIdOrNull(user.id!!)
+                foundUser
+                    .shouldExist()
+                    .withName("John Doe")
+                    .withMaxPtoDays(20)
+                    .withNoPtoDaysLeft()
             }
         }
     })

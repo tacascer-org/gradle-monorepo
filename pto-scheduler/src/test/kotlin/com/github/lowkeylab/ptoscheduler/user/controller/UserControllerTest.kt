@@ -2,12 +2,14 @@ package com.github.lowkeylab.ptoscheduler.user.controller
 
 import com.github.lowkeylab.ptoscheduler.user.IntegrationTest
 import com.github.lowkeylab.ptoscheduler.user.User
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.shouldExist
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.withMaxPtoDays
+import com.github.lowkeylab.ptoscheduler.user.UserExtensions.withName
 import com.github.lowkeylab.ptoscheduler.user.createUser
 import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
 import com.github.lowkeylab.ptoscheduler.user.resetDatabase
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.equality.shouldBeEqualUsingFields
-import io.kotest.matchers.shouldBe
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.web.servlet.client.MockMvcWebTestClient
 import java.time.LocalDate
@@ -27,9 +29,7 @@ class UserControllerTest(
                 .build()
 
         test("can create new user") {
-            val name = "John Doe"
-            val maxPtoDays = 20
-            val createNewUserInputModel = CreateNewUserInputModel(name, maxPtoDays)
+            val createNewUserInputModel = CreateNewUserInputModel("John Doe", 20)
 
             val result =
                 webTestClient
@@ -42,8 +42,7 @@ class UserControllerTest(
                 .isOk
                 .expectBody(User::class.java)
                 .value {
-                    it.name shouldBe name
-                    it.maxPtoDays shouldBe maxPtoDays
+                    it.shouldExist().withName("John Doe").withMaxPtoDays(20)
                 }
         }
 

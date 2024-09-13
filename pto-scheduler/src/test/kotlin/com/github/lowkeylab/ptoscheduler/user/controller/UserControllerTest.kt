@@ -2,6 +2,7 @@ package com.github.lowkeylab.ptoscheduler.user.controller
 
 import com.github.lowkeylab.ptoscheduler.user.IntegrationTest
 import com.github.lowkeylab.ptoscheduler.user.User
+import com.github.lowkeylab.ptoscheduler.user.createUser
 import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
 import com.github.lowkeylab.ptoscheduler.user.resetDatabase
 import io.kotest.core.spec.style.FunSpec
@@ -30,13 +31,13 @@ class UserControllerTest(
             val maxPtoDays = 20
             val createNewUserInputModel = CreateNewUserInputModel(name, maxPtoDays)
 
-            val output =
+            val result =
                 webTestClient
                     .post()
                     .bodyValue(createNewUserInputModel)
                     .exchange()
 
-            output
+            result
                 .expectStatus()
                 .isOk
                 .expectBody(User::class.java)
@@ -47,37 +48,35 @@ class UserControllerTest(
         }
 
         test("can find user by id") {
-            val user = User("John Doe", 20)
-            val savedUser = userRepository.save(user)
+            val user = createUser("John Doe", 20, userRepository)
 
-            val output =
+            val result =
                 webTestClient
                     .get()
-                    .uri("/${savedUser.id}")
+                    .uri("/${user.id}")
                     .exchange()
 
-            output
+            result
                 .expectStatus()
                 .isOk
                 .expectBody(User::class.java)
                 .value {
-                    it.shouldBeEqualUsingFields(savedUser)
+                    it.shouldBeEqualUsingFields(user)
                 }
         }
 
         test("can randomize a user's PTO days after a certain date") {
-            val user = User("John Doe", 20)
-            val savedUser = userRepository.save(user)
+            val user = createUser("John Doe", 20, userRepository)
             val afterDate = LocalDate.of(2022, 1, 1)
             val randomizePtoDaysInputModel = RandomizePtoDaysInputModel(afterDate)
 
-            val output =
+            val result =
                 webTestClient
                     .post()
-                    .uri("/${savedUser.id}/ptoDays/randomizations")
+                    .uri("/${user.id}/ptoDays/randomizations")
                     .bodyValue(randomizePtoDaysInputModel)
                     .exchange()
 
-            output.expectStatus().isOk
+            result.expectStatus().isOk
         }
     })

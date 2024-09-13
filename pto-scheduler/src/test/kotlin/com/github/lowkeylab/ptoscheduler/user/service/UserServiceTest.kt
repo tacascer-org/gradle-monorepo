@@ -1,7 +1,7 @@
 package com.github.lowkeylab.ptoscheduler.user.service
 
 import com.github.lowkeylab.ptoscheduler.user.IntegrationTest
-import com.github.lowkeylab.ptoscheduler.user.User
+import com.github.lowkeylab.ptoscheduler.user.createUser
 import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
 import com.github.lowkeylab.ptoscheduler.user.resetDatabase
 import io.kotest.core.spec.style.FunSpec
@@ -30,14 +30,13 @@ class UserServiceTest(
         }
 
         test("can randomize user's PTO days after a certain date") {
-            val user = User("John Doe", 20)
-            val savedUser = userRepository.save(user)
+            val user = createUser("John Doe", 20, userRepository)
             val date = LocalDate.of(2022, 1, 1)
 
-            sut.randomizePtoDays(savedUser.id!!, date)
+            sut.randomizePtoDays(user.id!!, date)
 
             transactionTemplate.execute {
-                val foundUser = userRepository.findByIdOrNull(savedUser.id!!)!!
+                val foundUser = userRepository.findByIdOrNull(user.id!!)!!
                 foundUser.ptoDays shouldHaveSize 20
             }
         }

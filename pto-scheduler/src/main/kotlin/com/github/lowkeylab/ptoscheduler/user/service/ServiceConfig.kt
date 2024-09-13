@@ -1,7 +1,7 @@
 package com.github.lowkeylab.ptoscheduler.user.service
 
 import com.github.lowkeylab.ptoscheduler.user.db.DbConfig
-import com.github.lowkeylab.ptoscheduler.user.db.JpaUserRepository
+import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -10,5 +10,5 @@ import org.springframework.context.annotation.Import
 @Import(DbConfig::class)
 class ServiceConfig {
     @Bean
-    fun userService(userRepository: JpaUserRepository): UserService = UserServiceImpl(userRepository)
+    fun userService(userRepository: UserRepository): UserService = UserService(userRepository)
 }

@@ -23,7 +23,7 @@ class UserController(
     @GetMapping("/{id}")
     fun findUserById(
         @PathVariable id: Long,
-    ): User? = userService.findUserById(id)
+    ): User = userService.findById(id) ?: throw IllegalArgumentException("User with ID $id not found")
 
     @PostMapping("/{id}/ptoDays/randomizations")
     fun randomizePtoDays(

@@ -54,13 +54,14 @@ class UserControllerTest(
                     .get()
                     .uri("/${savedUser.id}")
                     .exchange()
-                    .expectStatus()
-                    .isOk
-                    .expectBody(User::class.java)
 
-            output.value {
-                it.shouldBeEqualUsingFields(savedUser)
-            }
+            output
+                .expectStatus()
+                .isOk
+                .expectBody(User::class.java)
+                .value {
+                    it.shouldBeEqualUsingFields(savedUser)
+                }
         }
 
         test("can randomize a user's PTO days after a certain date") {

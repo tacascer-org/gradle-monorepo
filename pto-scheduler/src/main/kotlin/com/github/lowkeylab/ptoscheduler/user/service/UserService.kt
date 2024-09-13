@@ -2,16 +2,19 @@ package com.github.lowkeylab.ptoscheduler.user.service
 
 import com.github.lowkeylab.ptoscheduler.user.User
 import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Transactional(readOnly = true)
-interface UserService {
+class UserService(
+    private val userRepository: UserRepository,
+) {
     /**
      * Find a user by their ID.
      * @return The user, or null if not found.
      */
-    fun findUserById(id: Long): User?
+    fun findById(id: Long) = userRepository.findByIdOrNull(id)
 
     /**
      * Create a new user.
@@ -21,35 +24,18 @@ interface UserService {
     fun createNew(
         name: String,
         maxPtoDays: Int,
-    ): User
+    ) = userRepository.save(User(name, maxPtoDays))
 
     /**
-     * Randomize the PTO days of user with [id] after [after].
+     * Randomize the PTO days of user with [id] after [afterDate].
      */
     @Transactional
     fun randomizePtoDays(
         id: Long,
-        after: LocalDate,
-    ): User
-}
-
-class UserServiceImpl(
-    private val userRepository: UserRepository,
-) : UserService {
-    override fun findUserById(id: Long) = userRepository.findById(id)
-
-    override fun createNew(
-        name: String,
-        maxPtoDays: Int,
-    ) = userRepository.save(User(name, maxPtoDays))
-
-    override fun randomizePtoDays(
-        id: Long,
-        after: LocalDate,
+        afterDate: LocalDate,
     ): User =
-        userRepository.findById(id)?.let {
-            it.randomizePtoDaysAfter(after)
-            userRepository.update(it)
-            it
-        } ?: throw IllegalArgumentException("User not found")
+        userRepository.findByIdOrNull(id)?.let { user ->
+            user.randomizePtoDaysAfter(afterDate)
+            user
+        } ?: throw IllegalArgumentException("User with ID $id not found")
 }

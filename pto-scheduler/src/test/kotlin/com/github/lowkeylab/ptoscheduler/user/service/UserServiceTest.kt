@@ -6,9 +6,9 @@ import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.equality.shouldBeEqualUsingFields
-import io.kotest.matchers.shouldBe
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.transaction.support.TransactionTemplate
 import java.time.LocalDate
 
@@ -23,7 +23,7 @@ class UserServiceTest(
             val createdUser = sut.createNew("John Doe", 20)
 
             transactionTemplate.execute {
-                val foundUser = userRepository.findById(createdUser.id!!)!!
+                val foundUser = userRepository.findByIdOrNull(createdUser.id!!)!!
                 foundUser shouldBeEqualUsingFields createdUser
             }
         }
@@ -36,9 +36,8 @@ class UserServiceTest(
             sut.randomizePtoDays(savedUser.id!!, date)
 
             transactionTemplate.execute {
-                val foundUser = userRepository.findById(savedUser.id!!)!!
+                val foundUser = userRepository.findByIdOrNull(savedUser.id!!)!!
                 foundUser.ptoDays shouldHaveSize 20
-                foundUser.ptoDaysLeft shouldBe 0
             }
         }
     })

@@ -26,7 +26,7 @@ class User(
         ptoDays.add(date)
     }
 
-    fun randomlyUseRemainingPtoDaysAfter(date: LocalDate) {
+    fun randomizePtoDaysAfter(date: LocalDate) {
         validateState()
 
         while (usedPtoDays < maxPtoDays) {

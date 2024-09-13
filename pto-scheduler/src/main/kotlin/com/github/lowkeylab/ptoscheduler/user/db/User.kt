@@ -30,6 +30,8 @@ interface UserRepository {
     fun findById(id: Long): User?
 
     fun save(user: User): User
+
+    fun update(user: User)
 }
 
 class JpaUserRepository(
@@ -42,4 +44,8 @@ class JpaUserRepository(
     }
 
     override fun save(user: User): User = userEntityMapper.toDto(userEntityRepository.save(userEntityMapper.toEntity(user)))
+
+    override fun update(user: User) {
+        userEntityRepository.save(userEntityMapper.toEntity(user))
+    }
 }

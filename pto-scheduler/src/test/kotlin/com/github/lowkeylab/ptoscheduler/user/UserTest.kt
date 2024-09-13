@@ -68,7 +68,7 @@ class UserTest :
                     maxPtoDays = 20,
                 )
 
-            user.randomlyUseRemainingPtoDaysAfter(LocalDate.of(2022, 1, 1))
+            user.randomizePtoDaysAfter(LocalDate.of(2022, 1, 1))
 
             user.ptoDaysLeft shouldBe 0
         }
@@ -81,7 +81,7 @@ class UserTest :
                 )
             val date = LocalDate.of(2022, 1, 1)
 
-            user.randomlyUseRemainingPtoDaysAfter(date)
+            user.randomizePtoDaysAfter(date)
 
             user.ptoDays.forEach {
                 it.shouldBeAfter(date)
@@ -97,7 +97,7 @@ class UserTest :
             val date = LocalDate.of(2022, 12, 31)
 
             shouldThrow<IllegalArgumentException> {
-                user.randomlyUseRemainingPtoDaysAfter(date)
+                user.randomizePtoDaysAfter(date)
             }
         }
     })

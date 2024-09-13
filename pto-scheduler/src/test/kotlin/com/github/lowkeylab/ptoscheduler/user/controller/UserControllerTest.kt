@@ -34,14 +34,15 @@ class UserControllerTest(
                     .post()
                     .bodyValue(createNewUserInputModel)
                     .exchange()
-                    .expectStatus()
-                    .isOk
-                    .expectBody(User::class.java)
 
-            output.value {
-                it.name shouldBe name
-                it.maxPtoDays shouldBe maxPtoDays
-            }
+            output
+                .expectStatus()
+                .isOk
+                .expectBody(User::class.java)
+                .value {
+                    it.name shouldBe name
+                    it.maxPtoDays shouldBe maxPtoDays
+                }
         }
 
         test("can find user by id") {

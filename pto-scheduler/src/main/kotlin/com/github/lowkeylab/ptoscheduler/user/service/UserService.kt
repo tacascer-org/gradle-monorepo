@@ -3,6 +3,7 @@ package com.github.lowkeylab.ptoscheduler.user.service
 import com.github.lowkeylab.ptoscheduler.user.User
 import com.github.lowkeylab.ptoscheduler.user.db.UserRepository
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 interface UserService {
     /**
@@ -19,6 +20,14 @@ interface UserService {
         name: String,
         maxPtoDays: Int,
     ): User
+
+    /**
+     * Randomize the PTO days of user with [id] after [after].
+     */
+    fun randomizePtoDays(
+        id: Long,
+        after: LocalDate,
+    ): User
 }
 
 @Transactional(readOnly = true)
@@ -32,4 +41,14 @@ class UserServiceImpl(
         name: String,
         maxPtoDays: Int,
     ) = userRepository.save(User(name, maxPtoDays))
+
+    @Transactional
+    override fun randomizePtoDays(
+        id: Long,
+        after: LocalDate,
+    ): User =
+        userRepository.findById(id)?.let {
+            it.randomlyUseRemainingPtoDaysAfter(after)
+            it
+        } ?: throw IllegalArgumentException("User not found")
 }

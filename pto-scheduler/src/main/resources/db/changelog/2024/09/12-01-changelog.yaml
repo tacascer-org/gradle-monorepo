@@ -58,4 +58,3 @@ databaseChangeLog:
             constraintName: fk_user_ptodays_on_user
             referencedColumnNames: id
             referencedTableName: users
-

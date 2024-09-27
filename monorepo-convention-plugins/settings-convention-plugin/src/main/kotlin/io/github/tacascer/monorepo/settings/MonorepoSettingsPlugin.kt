@@ -2,9 +2,9 @@ package io.github.tacascer.monorepo.settings
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.initialization.Settings
 import org.gradle.api.plugins.BasePlugin
-import org.gradle.api.tasks.diagnostics.TaskReportTask
 
 const val CI_GROUP_NAME = "CI"
 
@@ -24,124 +24,64 @@ const val DEVELOPER_GROUP_NAME = "Developer"
 class MonorepoSettingsPlugin : Plugin<Settings> {
     override fun apply(settings: Settings) {
         settings.gradle.lifecycle.beforeProject { project ->
-            configureProject(project)
-        }
-        settings.gradle.lifecycle.afterProject { project ->
-            configureExistingTasks(project)
-        }
-    }
-}
+            project.pluginManager.apply(BasePlugin::class.java)
+            for (task in Tasks.entries) {
+                project.tasks.findByName(task.developerName)?.let {
+                    configureExistingTask(it, task)
+                } ?: createNewTask(project, task)
 
-private fun configureProject(project: Project) {
-    project.pluginManager.apply(BasePlugin::class.java)
-    project.defineDeveloperTasks()
-    project.defineCITasks()
-}
-
-private fun configureExistingTasks(project: Project) {
-    project.configureCheckTask()
-    project.configureBuildTask()
-    project.configureTasksTask()
-}
-
-private fun Project.defineDeveloperTasks() {
-    registerDeveloperTasks("lint")
-    registerDeveloperTasks("qualityCheck")
-    registerDeveloperTasks("release")
-}
-
-private fun Project.defineCITasks() {
-    registerCITasks(
-        CITaskConfiguration(
-            "lintAll",
-            emptyList(),
-        ),
-    )
-
-    registerCITasks(
-        CITaskConfiguration(
-            "checkAll",
-            listOf("lintAll"),
-        ),
-    )
-
-    registerCITasks(
-        CITaskConfiguration(
-            "qualityCheckAll",
-            listOf("checkAll"),
-        ),
-    )
-
-    registerCITasks(
-        CITaskConfiguration(
-            "buildAll",
-            listOf("qualityCheckAll"),
-        ),
-    )
-
-    registerCITasks(
-        CITaskConfiguration(
-            "releaseAll",
-            listOf("checkAll"),
-        ),
-    )
-}
-
-private fun Project.registerDeveloperTasks(name: String) {
-    tasks.register(name) { task ->
-        task.apply {
-            group = DEVELOPER_GROUP_NAME
-            this.description = "Run $name in this project"
+                createCITask(project, task)
+            }
         }
     }
-}
 
-private fun Project.registerCITasks(configuration: CITaskConfiguration) {
-    tasks.register(configuration.name) { task ->
-        task.apply {
-            group = CI_GROUP_NAME
-            description = configuration.description
-            dependsOn(configuration.dependsOn)
-            dependsOn(configuration.developerTaskName)
-            dependsOn(subprojects.map { "${it.name}:${configuration.developerTaskName}" })
-            dependsOn(gradle.includedBuilds.map { it.task(":${configuration.name}") })
+    private fun createCITask(
+        project: Project,
+        task: Tasks,
+    ) {
+        project.tasks.register(task.ciTaskName) { t ->
+            t.group = CI_GROUP_NAME
+            t.description = "Run ${task.developerName} in this project, all subprojects, and included builds"
+            t.dependsOn(task.developerName)
+            t.dependsOn(project.subprojects.map { "${it.name}:${task.developerName}" })
+            t.dependsOn(project.gradle.includedBuilds.map { it.task(":${task.ciTaskName}") })
         }
     }
-}
 
-private fun Project.configureCheckTask() {
-    tasks.named("check") {
-        it.dependsOn(tasks.named("lint"))
-        it.group = DEVELOPER_GROUP_NAME
+    private fun createNewTask(
+        project: Project,
+        task: Tasks,
+    ) {
+        project.tasks.register(task.developerName) { t ->
+            t.group = DEVELOPER_GROUP_NAME
+            t.description = task.description
+            if (task.dependency != null) {
+                t.dependsOn(task.dependency.developerName)
+            }
+        }
+    }
+
+    private fun configureExistingTask(
+        existingTask: Task,
+        task: Tasks,
+    ): Task {
+        existingTask.group = DEVELOPER_GROUP_NAME
+        existingTask.description = task.description
+        return existingTask.dependsOn(task.dependency?.developerName)
     }
 }
 
-private fun Project.configureBuildTask() {
-    tasks.named("build") {
-        it.dependsOn("qualityCheck")
-        it.group = DEVELOPER_GROUP_NAME
-    }
-}
-
-private fun Project.configureTasksTask() {
-    tasks.named("tasks", TaskReportTask::class.java) {
-        it.displayGroups = listOf(CI_GROUP_NAME, DEVELOPER_GROUP_NAME)
-    }
-}
-
-/**
- * Configuration for a top-level CI task.
- * @property name The name of the task if it's applied to the root project (i.e. a `settings.gradle.kts` file).
- * @property dependsOn The tasks that this task depends on.
- */
-private data class CITaskConfiguration(
-    val name: String,
-    val dependsOn: List<String>,
+private enum class Tasks(
+    val developerName: String,
+    val description: String,
+    val dependency: Tasks?,
 ) {
-    /**
-     * The name of the task if this task is for a developer.
-     */
-    val developerTaskName = name.dropLast(3)
+    LINT("lint", "Run linters in this project", null),
+    CHECK("check", "Run tests and integration tests in this project", LINT),
+    QUALITY_CHECK("qualityCheck", "Run quality checks in this project", LINT),
+    BUILD("build", "Run tests and assembles this project artifacts", QUALITY_CHECK),
+    RELEASE("release", "Release this project", QUALITY_CHECK),
+    ;
 
-    val description = "Run $developerTaskName in this project, all subprojects, and included builds"
+    val ciTaskName = "${developerName}All"
 }

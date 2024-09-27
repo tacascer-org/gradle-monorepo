@@ -47,6 +47,7 @@ private fun configureExistingTasks(project: Project) {
 private fun Project.defineDeveloperTasks() {
     registerDeveloperTasks("lint")
     registerDeveloperTasks("qualityCheck")
+    registerDeveloperTasks("release")
 }
 
 private fun Project.defineCITasks() {
@@ -75,6 +76,13 @@ private fun Project.defineCITasks() {
         CITaskConfiguration(
             "buildAll",
             listOf("qualityCheckAll"),
+        ),
+    )
+
+    registerCITasks(
+        CITaskConfiguration(
+            "releaseAll",
+            listOf("checkAll"),
         ),
     )
 }

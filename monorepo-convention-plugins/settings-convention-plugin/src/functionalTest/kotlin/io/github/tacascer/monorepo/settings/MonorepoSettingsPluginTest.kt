@@ -13,10 +13,12 @@ class MonorepoSettingsPluginTest :
             "check",
             "qualityCheck",
             "build",
+            "release",
             "lintAll",
             "checkAll",
             "qualityCheckAll",
             "buildAll",
+            "releaseAll",
         ).forEach {
             test("when plugin is applied, $it task is created in projects") {
                 val testDir = tempdir()

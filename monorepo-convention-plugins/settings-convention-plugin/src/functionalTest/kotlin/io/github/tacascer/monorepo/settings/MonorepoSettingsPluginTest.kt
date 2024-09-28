@@ -11,12 +11,10 @@ class MonorepoSettingsPluginTest :
         listOf(
             "lint",
             "check",
-            "qualityCheck",
             "build",
             "release",
             "lintAll",
             "checkAll",
-            "qualityCheckAll",
             "buildAll",
             "releaseAll",
         ).forEach {

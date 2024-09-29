@@ -14,12 +14,12 @@ const val DEVELOPER_GROUP_NAME = "Developer"
  * This plugin adds the following tasks for CI:
  * - lintAll task that runs all lint tasks in all subprojects and included builds
  * - checkAll task that runs all check tasks in all subprojects and included builds
- * - qualityCheckAll task that runs all qualityCheck tasks in all subprojects and included builds
  * - buildAll task that runs all build tasks in all subprojects and included builds
+ * - releaseAll task that runs all release tasks in all subprojects and included builds
  *
  * It also adds the following tasks for developers:
  * - lint task that runs linters in a project
- * - qualityCheck task that runs quality checks in a project
+ * - release task that releases a project
  */
 class MonorepoSettingsPlugin : Plugin<Settings> {
     override fun apply(settings: Settings) {
@@ -78,9 +78,8 @@ private enum class Tasks(
 ) {
     LINT("lint", "Run linters in this project", null),
     CHECK("check", "Run tests and integration tests in this project", LINT),
-    QUALITY_CHECK("qualityCheck", "Run quality checks in this project", LINT),
-    BUILD("build", "Run tests and assembles this project artifacts", QUALITY_CHECK),
-    RELEASE("release", "Release this project", QUALITY_CHECK),
+    BUILD("build", "Run tests and assembles this project artifacts", CHECK),
+    RELEASE("release", "Release this project", CHECK),
     ;
 
     val ciTaskName = "${developerName}All"

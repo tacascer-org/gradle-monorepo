@@ -9,8 +9,6 @@ version = "0.0.1" // x-release-please-version
 // Duplicating functionality of project convention plugin because it is not available in the monorepo-convention-plugins project.
 val lint by tasks.registering { }
 
-val qualityCheck by tasks.registering { }
-
 val lintAll by tasks.registering {
     dependsOn(lint)
 }
@@ -19,12 +17,7 @@ val checkAll by tasks.registering {
     dependsOn(subprojects.map { "${it.name}:check" })
 }
 
-val qualityCheckAll by tasks.registering {
-    dependsOn(checkAll)
-    dependsOn(qualityCheck)
-}
-
-val buildAll by tasks.registering { dependsOn(qualityCheckAll) }
+val buildAll by tasks.registering { dependsOn(checkAll) }
 
 dependencies {
     kover(project(":settings-convention-plugin"))
@@ -49,6 +42,6 @@ tasks.sonar {
     dependsOn(tasks.koverXmlReport)
 }
 
-qualityCheck {
+tasks.check {
     dependsOn(tasks.sonar)
 }

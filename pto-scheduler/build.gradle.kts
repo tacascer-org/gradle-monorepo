@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.spring.boot.starterDataJpa)
     implementation(libs.spring.boot.starterWeb)
     implementation(libs.spring.boot.starterWebflux)
+    implementation(libs.springdoc.openApiStarterWebMvcUi)
     kapt(libs.mapstruct.processor)
     runtimeOnly(libs.postgresql)
 }

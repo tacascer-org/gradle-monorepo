@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
     id("kotlin-spring-conventions")
     alias(libs.plugins.sonarqube)
@@ -34,6 +36,23 @@ tasks.sonar {
 tasks.check {
     dependsOn(tasks.sonar)
 }
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+    val image = "tacascer/${project.name}"
+    imageName = image
+    tags = listOf("$image:${project.version}", "$image:latest")
+    if (System.getenv("DOCKER_HUB_TOKEN") != null) {
+        publish = true
+        docker {
+            publishRegistry {
+                username = "tacascer"
+                password = System.getenv("DOCKER_HUB_TOKEN")
+            }
+        }
+    }
+}
+
+tasks.release {}
 
 sonar {
     properties {

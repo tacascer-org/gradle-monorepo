@@ -1,5 +1,3 @@
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
-
 plugins {
     id("kotlin-spring-conventions")
     alias(libs.plugins.sonarqube)
@@ -37,7 +35,7 @@ tasks.check {
     dependsOn(tasks.sonar)
 }
 
-tasks.named<BootBuildImage>("bootBuildImage") {
+tasks.bootBuildImage {
     val image = "tacascer/${project.name}"
     imageName = image
     tags = listOf("$image:${project.version}", "$image:latest")
@@ -52,7 +50,9 @@ tasks.named<BootBuildImage>("bootBuildImage") {
     }
 }
 
-tasks.release {}
+tasks.release {
+    dependsOn(tasks.bootBuildImage)
+}
 
 sonar {
     properties {

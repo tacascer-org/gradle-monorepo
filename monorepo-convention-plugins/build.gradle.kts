@@ -19,6 +19,8 @@ val checkAll by tasks.registering {
 
 val buildAll by tasks.registering { dependsOn(checkAll) }
 
+val releaseAll by tasks.registering {}
+
 dependencies {
     kover(project(":settings-convention-plugin"))
 }

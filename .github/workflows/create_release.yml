@@ -2,13 +2,13 @@ on:
   workflow_dispatch:
     inputs:
       project:
-        description: 'The project name. Specify the project relative to the root project.'
+        description: "The project name. Specify the project relative to the root project."
         required: true
         type: choice
         options:
           - pto-scheduler
 
-permissions: { }
+permissions: {}
 
 jobs:
   create-release:

@@ -4,9 +4,9 @@ on:
       project:
         description: 'The project name. Specify the project relative to the root project.'
         required: true
-        type: string
+        type: choice
         options:
-          - 'pto-scheduler'
+          - pto-scheduler
 
 permissions: { }
 

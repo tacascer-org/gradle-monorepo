@@ -79,7 +79,7 @@ private enum class Tasks(
     LINT("lint", "Run linters in this project", null),
     CHECK("check", "Run tests and integration tests in this project", LINT),
     BUILD("build", "Run tests and assembles this project artifacts", CHECK),
-    RELEASE("release", "Release this project", CHECK),
+    RELEASE("release", "Release this project", null),
     ;
 
     val ciTaskName = "${developerName}All"

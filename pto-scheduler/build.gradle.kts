@@ -35,6 +35,25 @@ tasks.check {
     dependsOn(tasks.sonar)
 }
 
+tasks.bootBuildImage {
+    val image = "tacascer/${project.name}"
+    imageName = image
+    tags = listOf("$image:${project.version}", "$image:latest")
+    if (System.getenv("DOCKER_HUB_TOKEN") != null) {
+        publish = true
+        docker {
+            publishRegistry {
+                username = "tacascer"
+                password = System.getenv("DOCKER_HUB_TOKEN")
+            }
+        }
+    }
+}
+
+tasks.release {
+    dependsOn(tasks.bootBuildImage)
+}
+
 sonar {
     properties {
         property("sonar.projectKey", "lowkeylab_gradle-monorepo_pto-scheduler")

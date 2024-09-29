@@ -1,0 +1,24 @@
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: "The project name. Specify the project relative to the root project."
+        required: true
+        type: choice
+        options:
+          - pto-scheduler
+
+permissions: {}
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ vars.JAVA_VERSION }}
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Create release
+        run: ./gradlew :${{inputs.project}}:releaseAll
